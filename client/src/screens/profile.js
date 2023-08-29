@@ -11,7 +11,7 @@ function Profile(){
     const [error,setError]=useState(false);
     const user=JSON.parse(localStorage.getItem('user'));
     useEffect(() => {
-        axios.get(`https://hotelbookingservicebackend.onrender.com/bookingDetails/${user._id}`)
+        axios.get(`https://hotelbookingservice.onrender.com/bookingDetails/${user._id}`)
           .then(response => {
             setloading(true);
             console.log(response.data);
