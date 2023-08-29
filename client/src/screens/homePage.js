@@ -17,7 +17,7 @@ function HomePage() {
   const [type,setType]=useState('All');
   const [selectedRange, setSelectedRange] = useState([null, null]);
   useEffect(() => {
-    axios.get('https://hotelbookingservicebackend.onrender.com/api/rooms')
+    axios.get('https://hotelbookingservice.onrender.com/api/rooms')
       .then(response => {
         setRooms(response.data.rooms);
         setDuplicateRooms(response.data.rooms);
