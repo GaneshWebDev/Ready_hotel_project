@@ -5,7 +5,7 @@ import Loading from './loading';
 function BookingDiv({bookId,fromDate,toDate,amount,status}){
   const [loading,setLoading]=useState(false);
   function cancelBooking(){
-    axios.get(`/cancelBooking/${bookId}`)
+    axios.get(`https://hotelbookingservice.onrender.com/cancelBooking/${bookId}`)
     .then(response => {
       setLoading(true);
       console.log(response.data);
