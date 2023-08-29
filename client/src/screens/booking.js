@@ -26,7 +26,7 @@ function Booking(){
             days,
             token
          }
-       axios.post('https://hotelbookingservicebackend.onrender.com/bookroom',bookingDetails).then(
+       axios.post('https://hotelbookingservice.onrender.com/bookroom',bookingDetails).then(
          response=>{
              if(response.status==201){
                 setloading(true);
@@ -45,7 +45,7 @@ function Booking(){
      });
     }
     useEffect(() => {
-        axios.get(`https://hotelbookingservicebackend.onrender.com/api/roomsGetRoomById/${roomid}`)
+        axios.get(`https://hotelbookingservice.onrender.com/api/roomsGetRoomById/${roomid}`)
           .then(response => {
             setRoom(response.data);
             console.log(response.data);
