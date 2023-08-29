@@ -19,7 +19,7 @@ const Login = () => {
         email,
         password
     }
-    axios.post('/login',user).then(
+    axios.post('https://hotelbookingservicebackend.onrender.com/login',user).then(
         response=>{
             setloading(true);
             if(response.status==200){

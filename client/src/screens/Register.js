@@ -23,7 +23,7 @@ const Register = () => {
         }
         try {
             setloading(true);
-            axios.post('/register',user).then(
+            axios.post('https://hotelbookingservicebackend.onrender.com/register',user).then(
                 response=>{
                     console.log(`successfully create ${response}`);
                     setloading(false);

@@ -45,7 +45,7 @@ export function Bookings(){
     const [loading,setLoading]=useState(true);
     const [bookings,setBookings]=useState(null);
     useEffect(() => {
-        axios.get('/getAllBookingDetails')
+        axios.get('https://hotelbookingservicebackend.onrender.com/getAllBookingDetails')
           .then(response => {
             console.log(response.data)
             setBookings(response.data);
@@ -92,7 +92,7 @@ export function Users(){
     const [loading,setLoading]=useState(true);
     const [users,setUsers]=useState(null);
     useEffect(() => {
-        axios.get('/getAllUsersDetails')
+        axios.get('https://hotelbookingservicebackend.onrender.com/getAllUsersDetails')
           .then(response => {
             console.log(response.data)
             setUsers(response.data);
@@ -157,7 +157,7 @@ export function AddRooms(){
   const handleSubmit = (event) => {
     event.preventDefault();
     // Add your form submission logic here
-    axios.post('/roomData',formData)
+    axios.post('https://hotelbookingservicebackend.onrender.com/roomData',formData)
     .then(response => {
       console.log(response.data)
       if(response.status==201){
@@ -271,7 +271,7 @@ export function GetRooms(){
 
   useEffect(() => {
     // Fetch room data from your backend API
-    axios.get('/admin/rooms')
+    axios.get('https://hotelbookingservicebackend.onrender.com/admin/rooms')
       .then(response => {
         setRooms(response.data);
       })

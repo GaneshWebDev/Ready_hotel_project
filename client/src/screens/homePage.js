@@ -3,14 +3,12 @@ import axios from 'axios';
 import moment from 'moment';
 import { differenceInDays } from 'date-fns';
 import Loading from '../components/loading';
-import Error from '../components/error';
 import Rooms from '../components/rooms';
 import { DatePicker } from 'antd';
 import 'antd/dist/reset.css'; // Import Ant Design CSS
 function HomePage() {
   const [rooms, setRooms] = useState([]);
   const [loading,setloading]=useState(true);
-  const [error,setError]=useState(false);
   const [fromDate,setFromDate]=useState('');
   const [toDate,setToDate]=useState('');
   const [days,setDays]=useState(0);
@@ -18,38 +16,41 @@ function HomePage() {
   const [duplicateRooms,setDuplicateRooms]=useState([]);
   const [type,setType]=useState('All');
   const [selectedRange, setSelectedRange] = useState([null, null]);
-
+  useEffect(() => {
+    axios.get('https://hotelbookingservicebackend.onrender.com/api/rooms')
+      .then(response => {
+        setRooms(response.data.rooms);
+        setDuplicateRooms(response.data.rooms);
+        setloading(false);
+      })
+      .catch(error => {
+        setloading(false);
+        console.error('Error fetching data:', error);
+      });
+  }, []); 
   /*const handleDateChange = (dates) => {
       setSelectedRange(dates);
   };*/
   const filterByDate=(dates)=>{
     setSelectedRange(dates);
     if(dates){
-      console.log('filter',dates);
       let tempRooms=[];
       var availability=false;
       for(const room of duplicateRooms){
         if(room.currentBookings.length>0){
-            console.log(room.name,"stage1");
             for(const booking of room.currentBookings){
               if(!moment(moment(dates[0].$d).format('DD-MM-YYYY')).isBetween(booking.fromDate,booking.toDate)&&!moment(moment(dates[1].$d).format('DD-MM-YYYY')).isBetween(booking.fromDate,booking.toDate)){
-                  console.log(room.name,"stage2");
-
                 if(
                     moment(dates[0].$d).format('DD-MM-YYYY')!== booking.fromDate&&
                     moment(dates[0].$d).format('DD-MM-YYYY')!== booking.toDate&&
                     moment(dates[1].$d).format('DD-MM-YYYY')!== booking.fromDate&&
                     moment(dates[1].$d).format('DD-MM-YYYY')!==booking.toDate
-                ){availability=true 
-                  console.log(room.name,"stage3");
-                }
+                ){availability=true}
               }
             }
         }
         if(availability==true || room.currentBookings.length==0){
-          console.log(room.name,"stage4");
           tempRooms.push(room);
-          console.log(tempRooms);
         }
         setRooms(tempRooms);
       }
@@ -66,7 +67,6 @@ function HomePage() {
       setToDate(selectedRange[1].$d);
       setFromDate(selectedRange[0].$d);
       setDays(differenceInDays(end,start)+1);
-      console.log(days);
     }else{
       alert('please select date');
       event.preventDefault();
@@ -86,20 +86,7 @@ function HomePage() {
     }
      
   }
-  useEffect(() => {
-    axios.get('/api/rooms')
-      .then(response => {
-        setRooms(response.data.rooms);
-        setDuplicateRooms(response.data.rooms);
-        console.log(response.data);
-        setloading(false);
-      })
-      .catch(error => {
-        setError(true);
-        setloading(false);
-        console.error('Error fetching data:', error);
-      });
-  }, []); // Empty dependency array means this effect runs once on mount
+ // Empty dependency array means this effect runs once on mount
   return (
     <div>
       <div className="container-fluid  text-center mt-4">
